@@ -75,79 +75,52 @@ module.exports = function toReadable(num) {
     90: 'ninety',
   }
 
-  const getValueByKey = (object, key) => {
-    return object[key]
-  }
-
-
   const findTen = num => {
-    if (getValueByKey(numsToConvert, num) == undefined) {
+    if (numsToConvert[num] == undefined) {
 
-      const firstNum = String(num).split('')[0]
-      const lastNum = String(num).split('')[1]
-      const ten = `${firstNum}0`
+      const firstNum = String(num).split('')[0] == 0 ? '' : String(num).split('')[0]
+      const lastNum = String(num).split('')[1] == 0 ? '' : String(num).split('')[1]
+      const tens = `${firstNum}0`
 
-      return `${getValueByKey(numsToConvert, ten)} ${getValueByKey(numsToConvert, lastNum)}`
-
-    } else {
-      return getValueByKey(numsToConvert, num)
-    }
-  }
-
-  const findHundred = num => {
-    const firstNum = String(num).split('')[0]
-    const secondNum = String(num).split('')[1]
-    const lastNum = String(num).split('')[2]
-    let ten = `${secondNum}0`
-    const hundred = `${getValueByKey(numsToConvert, firstNum)} hundred`
-    let tenRes = `${getValueByKey(numsToConvert, `${secondNum}${lastNum}`)}`
-
-
-    if (secondNum == 0 && lastNum == 0) {
-
-      tenRes = ''
-
-    } else if (secondNum == 0 && lastNum > 0) {
-
-      tenRes = '' + getValueByKey(numsToConvert, lastNum)
-
-    } else if (secondNum > 0 && lastNum == 0) {
-
-      tenRes = '' + getValueByKey(numsToConvert, ten)
+      return `${numsToConvert[tens]} ${numsToConvert[lastNum]}`.trim()
 
     } else {
-      tenRes = '' + getValueByKey(numsToConvert, num)
-    }
 
-    return `${getValueByKey(numsToConvert, firstNum)} hundred${tenRes}`
-  }
-
-
-
-
-
-  const whatANumber = number => {
-
-
-    switch (String(number).length) {
-
-      case 1:
-        return getValueByKey(numsToConvert, number)
-        break;
-
-      case 2:
-        return findTen(number)
-        break;
-
-      case 3:
-        return findHundred(number)
-        break;
+      return numsToConvert[num]
     }
   }
 
 
 
+  const findHundred = number => {
 
-  return whatANumber(num)
+    const firstNum = String(number).split('')[0] == 0 ? '' : String(number).split('')[0]
+    const secondNum = String(number).split('')[1] == 0 ? '' : String(number).split('')[1]
+    const lastNum = String(number).split('')[2]
+
+    const tens = findTen(`${secondNum}${lastNum}`) === 'zero' ? '' : findTen(`${secondNum}${lastNum}`)
+    const hundred = `${numsToConvert[firstNum]} hundred`
+
+    return `${hundred} ${tens}`.trim()
+
+  }
+
+
+
+  switch (String(num).length) {
+
+    case 1:
+      return numsToConvert[num]
+      break;
+
+    case 2:
+      return findTen(num)
+      break;
+
+    case 3:
+      return findHundred(num)
+      break;
+  }
+
 
 }

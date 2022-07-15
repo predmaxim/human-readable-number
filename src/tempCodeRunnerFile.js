@@ -1,4 +1,4 @@
-const numsToConvert = {
+  const numsToConvert = {
     0: 'zero',
     1: 'one',
     2: 'two',
@@ -18,10 +18,10 @@ const numsToConvert = {
     16: 'sixteen',
     17: 'seventeen',
     18: 'eighteen',
-    19: 'тштуеуут',
+    19: 'nineteen',
     20: 'twenty',
     30: 'thirty',
-    40: 'fourty',
+    40: 'forty',
     50: 'fifty',
     60: 'sixty',
     70: 'seventy',
@@ -30,34 +30,10 @@ const numsToConvert = {
   }
 
   const getValueByKey = (object, key) => {
-    return object[key]
+    console.log(object[key])
+    return object[key]    
   }
 
-  const whatANumber = number => {
-
-
-    switch (String(number).length) {
-      case 1:
-        return getValueByKey(numsToConvert, number)
-        break;
-      case 2:
-        if (getValueByKey(numsToConvert, number) == undefined && number > 20) {
-
-          const firstNum = String(number).split('')[0]
-          const lastNum = String(number).split('')[1]
-          const des = firstNum + '0'
-
-          return `${getValueByKey(numsToConvert, des)} ${getValueByKey(numsToConvert, lastNum)}`
-
-        } else {
-          return getValueByKey(numsToConvert, number)
-        }
-        break;
-      case 3:
-        return getValueByKey(numsToConvert, number)
-        break;
-    }
-  }
-
-
-  console.log(whatANumber(21))
+  getValueByKey(numsToConvert, 5)
+  console.log(numsToConvert[5])
+  
