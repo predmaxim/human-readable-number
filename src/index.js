@@ -79,58 +79,68 @@ module.exports = function toReadable(num) {
     return object[key]
   }
 
+
+  const findTen = num => {
+    if (getValueByKey(numsToConvert, num) == undefined) {
+
+      const firstNum = String(num).split('')[0]
+      const lastNum = String(num).split('')[1]
+      const ten = `${firstNum}0`
+
+      return `${getValueByKey(numsToConvert, ten)} ${getValueByKey(numsToConvert, lastNum)}`
+
+    } else {
+      return getValueByKey(numsToConvert, num)
+    }
+  }
+
+  const findHundred = num => {
+    const firstNum = String(num).split('')[0]
+    const secondNum = String(num).split('')[1]
+    const lastNum = String(num).split('')[2]
+    let ten = `${secondNum}0`
+    const hundred = `${getValueByKey(numsToConvert, firstNum)} hundred`
+    let tenRes = `${getValueByKey(numsToConvert, `${secondNum}${lastNum}`)}`
+
+
+    if (secondNum == 0 && lastNum == 0) {
+
+      tenRes = ''
+
+    } else if (secondNum == 0 && lastNum > 0) {
+
+      tenRes = '' + getValueByKey(numsToConvert, lastNum)
+
+    } else if (secondNum > 0 && lastNum == 0) {
+
+      tenRes = '' + getValueByKey(numsToConvert, ten)
+
+    } else {
+      tenRes = '' + getValueByKey(numsToConvert, num)
+    }
+
+    return `${getValueByKey(numsToConvert, firstNum)} hundred${tenRes}`
+  }
+
+
+
+
+
   const whatANumber = number => {
 
 
     switch (String(number).length) {
 
+      case 1:
+        return getValueByKey(numsToConvert, number)
+        break;
+
       case 2:
-        if (getValueByKey(numsToConvert, number) == undefined && number > 20) {
-
-          const firstNum = String(number).split('')[0]
-          const lastNum = String(number).split('')[1]
-          const ten = `${firstNum}0`
-
-          return `${getValueByKey(numsToConvert, ten)} ${getValueByKey(numsToConvert, lastNum)}`
-
-        } else {
-          return getValueByKey(numsToConvert, number)
-        }
+        return findTen(number)
         break;
 
       case 3:
-        const firstNum = String(number).split('')[0]
-        const secondNum = String(number).split('')[1]
-        const lastNum = String(number).split('')[2]
-        const ten = `${secondNum}0`
-        const hundred = `${getValueByKey(numsToConvert, firstNum)} hundred`
-        let tenRes = `${getValueByKey(numsToConvert, `${secondNum}${lastNum}`)}`
-        
-
-        if (secondNum == 0) {
-
-          ten = ''
-          tenRes = getValueByKey(numsToConvert, lastNum)
-
-        } else if (secondNum > 0 && secondNum < 21) {
-          
-          tenRes = getValueByKey(numsToConvert, number)
-
-        } else if (secondNum > 20) {
-
-          tenRes = `${getValueByKey(numsToConvert, ten)} ${getValueByKey(numsToConvert, lastNum)}`
-          
-        } else if (lastNum == 0) {
-          tenRes = ten
-        } else {
-          tenRes = getValueByKey(numsToConvert, number)
-        }
-
-        return `${getValueByKey(numsToConvert, firstNum)} hundred ${tenRes}`
-        break;
-
-      default:
-        return getValueByKey(numsToConvert, number)
+        return findHundred(number)
         break;
     }
   }
