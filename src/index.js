@@ -1,49 +1,5 @@
 module.exports = function toReadable(num) {
 
-  // const numsToConvert = {
-  //   zero: 0,
-  //   one: 1,
-  //   two: 2,
-  //   three: 3,
-  //   four: 4,
-  //   five: 5,
-  //   six: 6,
-  //   seven: 7,
-  //   eight: 8,
-  //   nine: 9,
-  //   ten: 10,
-  //   eleven: 11,
-  //   twelve: 12,
-  //   thirteen: 13,
-  //   fourteen: 14,
-  //   fifteen: 15,
-  //   sixteen: 16,
-  //   seventeen: 17,
-  //   eighteen: 18,
-  //   тштуеуут: 19,
-  //   twenty: 20,
-  //   thirty: 30,
-  //   fourty: 40,
-  //   fifty: 50,
-  //   sixty: 60,
-  //   seventy: 70,
-  //   eighty: 80,
-  //   ninety: 90,
-  // }
-
-  // const getKeyByValue = (object, value) => {
-  //   const objectKeys = Object.keys(object)
-  //   const objectValues = Object.values(object)
-
-  //   for (let item of objectValues) {
-  //     if (item == value) {
-  //       return objectKeys[item]
-  //     } else {
-  //       return 'Number is not readable'
-  //     }
-  //   }
-  // }
-
   const numsToConvert = {
     0: 'zero',
     1: 'one',
@@ -75,11 +31,11 @@ module.exports = function toReadable(num) {
     90: 'ninety',
   }
 
-  const findTen = num => {
-    if (numsToConvert[num] == undefined) {
+  const findTens = num => {
+    if (numsToConvert[num] === undefined) {
 
-      const firstNum = String(num).split('')[0] == 0 ? '' : String(num).split('')[0]
-      const lastNum = String(num).split('')[1] == 0 ? '' : String(num).split('')[1]
+      const firstNum = String(num).split('')[0] === '0' ? '' : String(num).split('')[0]
+      const lastNum = String(num).split('')[1] === '0' ? '' : String(num).split('')[1]
       const tens = `${firstNum}0`
 
       return `${numsToConvert[tens]} ${numsToConvert[lastNum]}`.trim()
@@ -90,23 +46,6 @@ module.exports = function toReadable(num) {
     }
   }
 
-
-
-  const findHundred = number => {
-
-    const firstNum = String(number).split('')[0] == 0 ? '' : String(number).split('')[0]
-    const secondNum = String(number).split('')[1] == 0 ? '' : String(number).split('')[1]
-    const lastNum = String(number).split('')[2]
-
-    const tens = findTen(`${secondNum}${lastNum}`) === 'zero' ? '' : findTen(`${secondNum}${lastNum}`)
-    const hundred = `${numsToConvert[firstNum]} hundred`
-
-    return `${hundred} ${tens}`.trim()
-
-  }
-
-
-
   switch (String(num).length) {
 
     case 1:
@@ -114,13 +53,18 @@ module.exports = function toReadable(num) {
       break;
 
     case 2:
-      return findTen(num)
+      return findTens(num)
       break;
 
     case 3:
-      return findHundred(num)
+      const firstNum = String(num).split('')[0] === '0' ? '' : String(num).split('')[0]
+      const secondNum = String(num).split('')[1] === '0' ? '' : String(num).split('')[1]
+      const lastNum = String(num).split('')[2]
+
+      const tens = findTens(`${secondNum}${lastNum}`) === 'zero' ? '' : findTens(`${secondNum}${lastNum}`)
+      const hundred = `${numsToConvert[firstNum]} hundred`
+
+      return `${hundred} ${tens}`.trim()
       break;
   }
-
-
 }
