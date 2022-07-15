@@ -34,8 +34,8 @@ module.exports = function toReadable(num) {
   const findTens = num => {
     if (numsToConvert[num] === undefined) {
 
-      const firstNum = String(num).split('')[0] === '0' ? '' : String(num).split('')[0]
-      const lastNum = String(num).split('')[1] === '0' ? '' : String(num).split('')[1]
+      const firstNum = String(num).split('')[0] == 0 ? '' : String(num).split('')[0]
+      const lastNum = String(num).split('')[1] == 0 ? '' : String(num).split('')[1]
       const tens = `${firstNum}0`
 
       return `${numsToConvert[tens]} ${numsToConvert[lastNum]}`.trim()
@@ -57,8 +57,8 @@ module.exports = function toReadable(num) {
       break;
 
     case 3:
-      const firstNum = String(num).split('')[0] === '0' ? '' : String(num).split('')[0]
-      const secondNum = String(num).split('')[1] === '0' ? '' : String(num).split('')[1]
+      const firstNum = String(num).split('')[0] == 0 ? '' : String(num).split('')[0]
+      const secondNum = String(num).split('')[1] == 0 ? '' : String(num).split('')[1]
       const lastNum = String(num).split('')[2]
 
       const tens = findTens(`${secondNum}${lastNum}`) === 'zero' ? '' : findTens(`${secondNum}${lastNum}`)
